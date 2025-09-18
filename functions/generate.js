@@ -6,11 +6,18 @@ exports.handler = async function (event) {
   // We access it here using `process.env`.
   const apiKey = process.env.GEMINI_API_KEY;
 
+   if (!apiKey) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Missing API key in environment variables" }),
+    };
+  }
+
   // This is the prompt sent from your website's JavaScript.
   const { prompt } = JSON.parse(event.body);
   
   // The URL for the Google Gemini API.
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   // This is the data structure Google's API expects.
   const payload = {
