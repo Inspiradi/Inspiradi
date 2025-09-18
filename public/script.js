@@ -85,6 +85,11 @@ if (!response.ok) {
 
 // Our function sends back the data from Google.
 const result = await response.json();
+
+if (result.error) {
+  throw new Error(typeof result.error === "string" ? result.error : JSON.stringify(result.error));
+}
+    
 const candidate = result.candidates?.[0];
 
 if (candidate && candidate.content?.parts?.[0]?.text) {
