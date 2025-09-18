@@ -1,0 +1,153 @@
+/* 1. FONT DEFINITIONS */
+.font-brand { font-family: 'Cinzel', serif; }
+.font-slogan { font-family: 'Poppins', sans-serif; }
+.font-forge-title { font-family: 'Alegreya Sans SC', sans-serif; }
+.font-cursive { font-family: 'Caveat', cursive; }
+
+/* 2. THEME COLOR VARIABLES */
+:root { /* Default: Dark Theme */
+    --c-bg-primary: #111827; --c-bg-secondary: #1f2937; --c-bg-tertiary: #374151;
+    --c-bg-modal: rgba(17, 24, 39, 0.8);
+    --c-text-primary: #f9fafb; --c-text-secondary: #9ca3af; --c-text-accent: #a5b4fc; --c-text-white: #ffffff;
+    --c-border: #374151;
+    --c-accent: #4f46e5; --c-accent-hover: #6366f1;
+    --c-danger: #ef4444; --c-danger-hover: #f87171;
+    --c-success: #22c55e;
+}
+html.theme-light {
+    --c-bg-primary: #f9fafb; --c-bg-secondary: #f3f4f6; --c-bg-tertiary: #e5e7eb;
+    --c-bg-modal: rgba(249, 250, 251, 0.8);
+    --c-text-primary: #111827; --c-text-secondary: #4b5563; --c-text-accent: #4338ca; --c-text-white: #ffffff;
+    --c-border: #d1d5db;
+    --c-accent: #4f46e5; --c-accent-hover: #4338ca;
+    --c-danger: #dc2626; --c-danger-hover: #ef4444;
+    --c-success: #16a34a;
+}
+html.theme-oled {
+    --c-bg-primary: #000000; --c-bg-secondary: #111111; --c-bg-tertiary: #1f1f1f;
+    --c-bg-modal: rgba(0, 0, 0, 0.8);
+    --c-text-primary: #e5e7eb; --c-text-secondary: #888888; --c-text-accent: #818cf8; --c-text-white: #ffffff;
+    --c-border: #2b2b2b;
+    --c-accent: #6366f1; --c-accent-hover: #a7a9ff;
+    --c-danger: #f87171; --c-danger-hover: #fca5a5;
+    --c-success: #4ade80;
+}
+
+/* 3. BASE STYLES & TRANSITIONS */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--c-bg-primary);
+    color: var(--c-text-primary);
+}
+* { transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+
+/* 4. CUSTOM THEME-AWARE UTILITY STYLES */
+.app-header {
+    background-color: color-mix(in srgb, var(--c-bg-primary) 70%, transparent);
+    border-bottom: 1px solid var(--c-border);
+}
+.sidebar {
+    background-color: color-mix(in srgb, var(--c-bg-primary) 80%, transparent);
+    border-right: 1px solid var(--c-border);
+}
+.nav-link { color: var(--c-text-secondary); }
+.nav-link:hover, .nav-link.active { background-color: var(--c-accent); color: var(--c-text-white); }
+.text-slogan, .text-forge-highlight { color: var(--c-text-accent); }
+.btn-primary { background-color: var(--c-accent); color: var(--c-text-white); }
+.btn-primary:hover { background-color: var(--c-accent-hover); }
+.btn-primary:disabled { background-color: var(--c-bg-tertiary); color: var(--c-text-secondary); cursor: not-allowed; }
+.btn-secondary { background-color: var(--c-bg-tertiary); color: var(--c-text-primary); }
+.btn-secondary:hover { background-color: color-mix(in srgb, var(--c-bg-tertiary) 85%, black); }
+.category-card, .disclaimer-box, .faq-item {
+    background-color: color-mix(in srgb, var(--c-bg-secondary) 50%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-border) 50%, transparent);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.category-card:hover { 
+    background-color: color-mix(in srgb, var(--c-bg-tertiary) 60%, transparent); 
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px -3px color-mix(in srgb, var(--c-bg-primary) 50%, black);
+}
+.generation-view-card, .folder-container, .modal-content, .history-container {
+    background-color: color-mix(in srgb, var(--c-bg-secondary) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-border) 50%, transparent);
+}
+.prompt-display-container { background-color: color-mix(in srgb, var(--c-bg-primary) 50%, transparent); }
+.text-link { color: var(--c-text-accent); }
+.text-link:hover { color: var(--c-accent-hover); }
+.input-field, .edit-textarea {
+    background-color: var(--c-bg-secondary); border: 1px solid var(--c-border); color: var(--c-text-primary);
+}
+.input-field:focus, .edit-textarea:focus {
+    border-color: var(--c-accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--c-accent) 40%, transparent);
+}
+.folder-item-summary-btn { color: var(--c-text-secondary); }
+.folder-item-summary-btn.rename:hover, .folder-item-summary-btn.copy:hover, .folder-item-summary-btn.edit:hover { color: var(--c-accent); }
+.folder-item-summary-btn.delete:hover { color: var(--c-danger); }
+.modal-overlay { background-color: var(--c-bg-modal); }
+.btn-danger { background-color: var(--c-danger); color: var(--c-text-white); }
+.btn-danger:hover { background-color: var(--c-danger-hover); }
+.theme-switcher-bg { background-color: var(--c-bg-secondary); }
+.theme-btn { color: var(--c-text-secondary); }
+.theme-btn:hover { background-color: var(--c-bg-tertiary); color: var(--c-text-primary); }
+.theme-btn.active { background-color: var(--c-accent); color: var(--c-text-white); }
+.brief-item dt { color: var(--c-text-accent); }
+.tos-content h2, .faq-content h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; }
+.tos-content h3 { font-weight: bold; margin-top: 0.75rem; }
+.tos-content p, .faq-content p { margin-bottom: 0.5rem; }
+.tos-content ul { list-style-position: inside; }
+
+/* 5. ACCESSIBILITY STYLES */
+button:focus-visible, a:focus-visible, input:focus-visible, details > summary:focus-visible, [type='checkbox']:focus-visible, textarea:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent) 50%, transparent);
+}
+
+/* 6. TOAST NOTIFICATION STYLES */
+#toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.toast {
+    background-color: var(--c-bg-tertiary);
+    color: var(--c-text-primary);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid var(--c-success);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* 7. MODAL ANIMATION */
+.modal-content-wrapper {
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+.modal-overlay.hidden .modal-content-wrapper {
+    transform: scale(0.95);
+    opacity: 0;
+}
+
+/* 8. GENERAL NON-COLOR & LAYOUT STYLES */
+#prompt-display, #category-view, #generation-view { transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out; }
+.fade-out { opacity: 0; transform: scale(0.98); }
+.details-arrow { transition: transform 0.2s; }
+details[open] > summary .details-arrow { transform: rotate(90deg); }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--c-bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--c-accent); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-accent-hover); }
+#sidebar { transition: transform 0.3s ease-in-out; }
