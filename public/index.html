@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspiradi - Art Inspiration Generator</title>
+
+    <meta name="description" content="Overcome creative blocks with Inspiradi, an AI-powered art inspiration generator designed to spark creativity for artists of all levels.">
+    <meta name="keywords" content="art inspiration, art ideas, creative block, AI art generator, drawing ideas, painting ideas">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inspiradi.app/">
+    <meta property="og:title" content="Inspiradi - Art Inspiration Generator">
+    <meta property="og:description" content="Empowering Artists to Overcome Creative Blocks with unique, AI-powered inspiration and creative briefs.">
+    <meta property="og:image" content="https://placehold.co/1200x630/4f46e5/ffffff?text=Inspiradi">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://inspiradi.app/">
+    <meta property="twitter:title" content="Inspiradi - Art Inspiration Generator">
+    <meta property="twitter:description" content="Empowering Artists to Overcome Creative Blocks with unique, AI-powered inspiration and creative briefs.">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/4f46e5/ffffff?text=Inspiradi">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@700&family=Caveat&family=Cinzel:wght@700&family=Inter:wght@400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-screen">
+    <noscript>
+        <div style="background-color: #ffc; padding: 1rem; text-align: center; color: #000;">
+            <strong>For the best experience, please enable JavaScript in your browser.</strong>
+        </div>
+    </noscript>
+    <div class="flex h-full">
+        <nav id="sidebar" class="sidebar backdrop-blur-md w-64 h-full fixed top-0 left-0 z-40 transform -translate-x-full md:translate-x-0 md:relative flex flex-col">
+            <div class="p-6">
+                <ul class="mt-4 space-y-2">
+                    <li><a href="#" id="nav-home" class="nav-link flex items-center gap-3 p-3 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Home Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <span>Home</span>
+                    </a></li>
+                    <li><a href="#" id="nav-forge" class="nav-link flex items-center gap-3 p-3 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Spark Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l1.414 1.414m10.606 10.606l1.414 1.414M18.364 5.636l-1.414 1.414M5.636 18.364l1.414-1.414"></path></svg>
+                        <span>The Spark Forge</span>
+                    </a></li>
+                    <li class="relative group"><a href="#" id="nav-brief" class="nav-link flex items-center gap-3 p-3 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Document Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <span>Generative Brief</span>
+                        <svg class="w-4 h-4 ml-auto" style="color: var(--c-text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Information Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </a>
+                    <div class="absolute left-full ml-2 w-56 modal-content text-sm rounded-lg p-3 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 hidden lg:block">
+                        Let our AI create a complete, random creative brief for you from scratch!
+                        <div class="absolute top-1/2 -translate-y-1/2 right-full w-0 h-0 border-y-8 border-y-transparent border-r-8" style="border-right-color: var(--c-bg-secondary);"></div>
+                    </div>
+                    </li>
+                    <li><a href="#" id="nav-saved" class="nav-link flex items-center gap-3 p-3 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Bookmark Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                        <span>Saved Sparks</span>
+                    </a></li>
+                    <li><a href="#" id="nav-faq" class="nav-link flex items-center gap-3 p-3 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Question Mark Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>FAQ</span>
+                    </a></li>
+                </ul>
+            </div>
+             <div class="mt-auto p-6 space-y-6">
+                <div id="theme-switcher-container">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider mb-3" style="color: var(--c-text-secondary);">Theme</h3>
+                    <div class="flex items-center justify-around theme-switcher-bg rounded-lg p-1">
+                        <button class="theme-btn p-2 rounded-md flex-1" data-theme="light" title="Light Mode" aria-label="Switch to Light Theme">
+                            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Sun Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </button>
+                        <button class="theme-btn p-2 rounded-md flex-1" data-theme="dark" title="Dark Mode" aria-label="Switch to Dark Theme">
+                            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Moon Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        </button>
+                        <button class="theme-btn p-2 rounded-md flex-1" data-theme="oled" title="OLED Mode" aria-label="Switch to OLED Theme">
+                             <svg class="w-6 h-6 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>OLED Icon</title><path d="M12 12.5A2.5 2.5 0 0 1 9.5 10v0a2.5 2.5 0 0 1 5 0v0a2.5 2.5 0 0 1-2.5 2.5Z"></path><path d="M12 6V3"></path><path d="m16.24 7.76 2.12-2.12"></path><path d="M18 12h3"></path><path d="m16.24 16.24 2.12 2.12"></path><path d="M12 18v3"></path><path d="m7.76 16.24-2.12 2.12"></path><path d="M6 12H3"></path><path d="m7.76 7.76-2.12-2.12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                 <div>
+                    <h3 class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: var(--c-text-secondary);">Contact & Legal</h3>
+                    <p class="text-sm" style="color: var(--c-text-secondary);">Found a bug? <a href="mailto:contact.inspiradi@gmail.com" class="text-link hover:underline">Contact us</a></p>
+                    <a href="#" id="tos-footer-link" class="text-sm text-link hover:underline">Terms of Service</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="flex-1 flex flex-col h-full">
+            <header class="app-header backdrop-blur-sm w-full z-30">
+                <div class="flex items-center justify-between p-4">
+                    <button id="menu-toggle" class="md:hidden" aria-label="Toggle Menu">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Menu Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <a href="#" id="nav-header-home-link" class="flex items-center gap-2 cursor-pointer" aria-label="Go to Home Page">
+                        <svg width="32" height="32" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0">
+                            <title>Inspiradi Logo</title>
+                             <g>
+                                <path d="M64 128 C64 128 112.2 92.5 86.8 63.7 C74.1 49.3 54.9 62.6 64 82.2 C73.1 62.6 92.3 49.3 79.6 63.7 C54.2 92.5 104.4 128 64 128 Z" fill="#2E42A8"/>
+                                <path d="M64 128 C64 128 15.8 92.5 41.2 63.7 C53.9 49.3 73.1 62.6 64 82.2 C54.9 62.6 35.7 49.3 48.4 63.7 C73.8 92.5 23.6 128 64 128 Z" fill="#26388F"/>
+                                <path d="M64 0 C64 0 15.8 35.5 41.2 64.3 C53.9 78.7 73.1 65.4 64 45.8 C54.9 65.4 35.7 78.7 48.4 64.3 C23 35.5 64 0 64 0 Z" fill="#4B90E0"/>
+                                <path d="M64 0 C64 0 112.2 35.5 86.8 64.3 C74.1 78.7 54.9 65.4 64 45.8 C73.1 65.4 92.3 78.7 79.6 64.3 C105 35.5 64 0 64 0 Z" fill="#4381CB"/>
+                                <path d="M64 44.1 L41.2 64.3 C48.4 78.7 54.9 65.4 64 45.8 C73.1 65.4 79.6 78.7 86.8 64.3 L64 44.1 Z" fill="#FFFFFF"/>
+                                <path d="M64 83.9 L41.2 63.7 C48.4 49.3 54.9 62.6 64 82.2 C73.1 62.6 79.6 49.3 86.8 63.7 L64 83.9 Z" fill="#FFFFFF"/>
+                                <path d="M64 22.1 C64 22.1 78.4 1.3 70.2 11.4 C62 21.6 64 22.1 64 22.1 Z" fill="#D83A8F"/>
+                                <path d="M64 22.1 C64 22.1 49.6 1.3 57.8 11.4 C66 21.6 64 22.1 64 22.1 Z" fill="#C22A7F"/>
+                            </g>
+                        </svg>
+                        <h1 class="text-xl sm:text-2xl font-bold font-brand">Inspiradi</h1>
+                        <sup class="font-cursive text-yellow-400 text-lg font-bold -top-2">beta</sup>
+                    </a>
+                    <div class="w-8"></div>
+                </div>
+            </header>
+
+            <main role="main" class="main-content flex-1 p-4 sm:p-6 md:p-8 pb-24 overflow-y-auto">
+                <div id="landing-view" class="w-full h-full max-w-4xl mx-auto text-center flex flex-col justify-center items-center">
+                    <div class="flex items-baseline justify-center">
+                        <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 sm:w-32 sm:h-32">
+                            <title>Inspiradi Logo</title>
+                             <g>
+                                <path d="M64 128 C64 128 112.2 92.5 86.8 63.7 C74.1 49.3 54.9 62.6 64 82.2 C73.1 62.6 92.3 49.3 79.6 63.7 C54.2 92.5 104.4 128 64 128 Z" fill="#2E42A8"/>
+                                <path d="M64 128 C64 128 15.8 92.5 41.2 63.7 C53.9 49.3 73.1 62.6 64 82.2 C54.9 62.6 35.7 49.3 48.4 63.7 C73.8 92.5 23.6 128 64 128 Z" fill="#26388F"/>
+                                <path d="M64 0 C64 0 15.8 35.5 41.2 64.3 C53.9 78.7 73.1 65.4 64 45.8 C54.9 65.4 35.7 78.7 48.4 64.3 C23 35.5 64 0 64 0 Z" fill="#4B90E0"/>
+                                <path d="M64 0 C64 0 112.2 35.5 86.8 64.3 C74.1 78.7 54.9 65.4 64 45.8 C73.1 65.4 92.3 78.7 79.6 64.3 C105 35.5 64 0 64 0 Z" fill="#4381CB"/>
+                                <path d="M64 44.1 L41.2 64.3 C48.4 78.7 54.9 65.4 64 45.8 C73.1 65.4 79.6 78.7 86.8 64.3 L64 44.1 Z" fill="#FFFFFF"/>
+                                <path d="M64 83.9 L41.2 63.7 C48.4 49.3 54.9 62.6 64 82.2 C73.1 62.6 79.6 49.3 86.8 63.7 L64 83.9 Z" fill="#FFFFFF"/>
+                                <path d="M64 22.1 C64 22.1 78.4 1.3 70.2 11.4 C62 21.6 64 22.1 64 22.1 Z" fill="#D83A8F"/>
+                                <path d="M64 22.1 C64 22.1 49.6 1.3 57.8 11.4 C66 21.6 64 22.1 64 22.1 Z" fill="#C22A7F"/>
+                            </g>
+                        </svg>
+                        <sup class="font-cursive text-yellow-400 text-2xl sm:text-3xl font-bold -translate-y-4 sm:-translate-y-6 ml-1">beta</sup>
+                    </div>
+                    <p class="text-lg sm:text-xl font-slogan text-slogan mt-4 mb-8">Empowering Artists to Overcome Creative Blocks</p>
+                    <div id="spark-of-the-day-container" class="w-full max-w-2xl mb-8">
+                        </div>
+                    <button id="enter-forge-btn" class="btn-primary font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105 shadow-lg shadow-indigo-600/30">
+                        Enter The Spark Forge
+                    </button>
+                </div>
+                
+                <div id="spark-forge-view" class="w-full max-w-4xl mx-auto text-center hidden">
+                    <div id="category-view" class="w-full">
+                         <header class="mb-8">
+                            <h2 class="text-3xl sm:text-4xl font-bold font-forge-title">
+                                The Spark <span class="text-forge-highlight">Forge</span>
+                            </h2>
+                            <p class="mt-2 text-md" style="color: var(--c-text-secondary);">Choose a category to start your journey!</p>
+                        </header>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"></div>
+                        <div class="my-8 pt-8 border-t" style="border-color: var(--c-border);">
+                            <button id="random-category-btn" class="btn-secondary font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
+                               🎲 Unsure of What to Choose? Try Random Spark!
+                           </button>
+                           <div class="mt-4 max-w-md mx-auto text-sm" style="color: var(--c-text-secondary);">
+                               <p><strong style="color: var(--c-text-primary);">What is a Random Spark?</strong> This will create a unique inspiration by combining a random Character, Environment, and Art Style all at once!</p>
+                           </div>
+                        </div>
+                    </div>
+                    
+                    <main id="generation-view" class="generation-view-card backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-10 shadow-2xl w-full hidden">
+                        <div class="flex justify-between items-center mb-6">
+                             <button id="back-btn" class="flex items-center gap-2 text-link transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Back Arrow Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                Back to Categories
+                            </button>
+                            <span id="current-category-display" class="font-bold text-right" style="color: var(--c-text-primary);"></span>
+                        </div>
+                        <div id="prompt-display-container" class="prompt-display-container relative min-h-[120px] sm:min-h-[160px] flex items-center justify-center p-4 rounded-xl mb-6 text-left">
+                            <button id="edit-prompt-btn" class="absolute top-3 left-3 p-2 rounded-md transition-colors" style="background-color: var(--c-bg-tertiary);" title="Edit this spark" aria-label="Edit this spark">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Edit Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L13.196 5.196z"></path></svg>
+                            </button>
+                            <button id="copy-prompt-btn" class="absolute top-3 right-3 p-2 rounded-md transition-colors" style="background-color: var(--c-bg-tertiary);" title="Copy to Clipboard" aria-label="Copy prompt to clipboard">
+                                <svg class="w-5 h-5" id="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Copy Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                <svg class="w-5 h-5 hidden text-green-400" id="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Checkmark Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </button>
+                            <div id="prompt-display" class="w-full pt-12 px-4" aria-live="polite"></div>
+                             <div id="loading-spinner" class="hidden absolute inset-0 flex items-center justify-center rounded-xl" style="background-color: var(--c-bg-modal); backdrop-filter: blur(2px);">
+                                <svg class="animate-spin h-8 w-8" style="color: var(--c-text-primary);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <title>Loading</title>
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="generation-buttons" class="flex flex-wrap items-center justify-center gap-4">
+                            </div>
+                         <div id="prompt-edit-buttons" class="hidden flex-wrap items-center justify-center gap-4">
+                            <button id="cancel-prompt-edit-btn" class="btn-secondary font-bold py-3 px-6 rounded-full">Cancel</button>
+                            <button id="save-prompt-edit-btn" class="btn-primary font-bold py-3 px-6 rounded-full">Save Changes</button>
+                        </div>
+                         <details id="spark-history-container" class="history-container rounded-xl mt-8">
+                            <summary class="flex justify-between items-center cursor-pointer group p-4">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>History Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <h3 class="font-bold text-lg">Recent Sparks</h3>
+                                </div>
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <ul id="history-list" class="pt-2 mt-2 pl-4 border-t" style="border-color: var(--c-border);"></ul>
+                        </details>
+                        <div id="ai-buttons-explanation" class="mt-8 text-left text-sm p-4 rounded-lg hidden" style="background-color: var(--c-bg-tertiary); border: 1px solid var(--c-border);">
+                            <h4 class="font-bold mb-3 text-base" style="color: var(--c-text-primary);">What do these AI buttons do?</h4>
+                            <div class="space-y-2" style="color: var(--c-text-secondary);">
+                                <p><strong style="color: var(--c-text-primary);">✨ Elaborate:</strong> Asks the AI to expand your current inspiration into a descriptive paragraph, adding details about mood, visuals, and story to help you get started.</p>
+                                <p><strong style="color: var(--c-text-primary);">📜 Get Brief:</strong> Turns your current inspiration into a structured creative brief, complete with a title, subject, setting, mood, color palette, and key elements.</p>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+
+                <div id="generative-brief-view" class="w-full max-w-4xl mx-auto hidden">
+                     <header class="mb-8 text-center relative">
+                        <h2 class="text-3xl sm:text-4xl font-bold">Generative Brief</h2>
+                        <p class="mt-2 text-md" style="color: var(--c-text-secondary);">Let the AI create a fully random creative brief.</p>
+                    </header>
+                    <div class="disclaimer-box p-4 rounded-lg mb-4 flex items-start gap-3">
+                        <span class="text-2xl" aria-hidden="true">⚠️</span>
+                        <p class="text-sm" style="color: var(--c-text-secondary);">
+                            <b>Disclaimer:</b> This section uses AI to generate random inspiration brief without any interference from the in-built library. This might result in absurd yet fascinating inspirations that might provide help in regaining interest in art.
+                        </p>
+                    </div>
+                    <div id="brief-limit-counter" class="text-sm text-center mb-4" style="color: var(--c-text-secondary);"></div>
+                    <div class="generation-view-card backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-10 shadow-2xl w-full">
+                        <div id="brief-display-container" class="prompt-display-container relative min-h-[120px] sm:min-h-[160px] flex items-center justify-center p-4 rounded-xl mb-6 text-left">
+                            <button id="copy-brief-btn" class="absolute top-3 right-3 p-2 rounded-md transition-colors" style="background-color: var(--c-bg-tertiary);" title="Copy to Clipboard" aria-label="Copy brief to clipboard">
+                                <svg class="w-5 h-5" id="copy-brief-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Copy Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                <svg class="w-5 h-5 hidden text-green-400" id="check-brief-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>Checkmark Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </button>
+                             <div id="brief-display" class="w-full pt-12" aria-live="polite">
+                                <p class="text-center" style="color: var(--c-text-secondary);">Click "Generate Random Brief" to begin.</p>
+                             </div>
+                              <div id="brief-loading-spinner" class="hidden absolute inset-0 flex items-center justify-center rounded-xl" style="background-color: var(--c-bg-modal); backdrop-filter: blur(2px);">
+                                <svg class="animate-spin h-8 w-8" style="color: var(--c-text-primary);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <title>Loading</title>
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="brief-buttons-container" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                             </div>
+                         <details id="brief-history-container" class="history-container rounded-xl mt-8">
+                            <summary class="flex justify-between items-center cursor-pointer group p-4">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><title>History Icon</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <h3 class="font-bold text-lg">Recent Briefs</h3>
+                                </div>
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <ul id="brief-history-list" class="pt-2 mt-2 pl-4 border-t" style="border-color: var(--c-border);"></ul>
+                        </details>
+                    </div>
+                </div>
+                
+                <div id="saved-sparks-view" class="w-full max-w-4xl mx-auto hidden">
+                    <header class="mb-8 text-center">
+                        <h2 class="text-3xl sm:text-4xl font-bold">Saved Sparks</h2>
+                        <p class="mt-2 text-md" style="color: var(--c-text-secondary);">Your personal collection of inspiration.</p>
+                    </header>
+                    <div id="folders-list-container">
+                        </div>
+                </div>
+
+                <div id="faq-view" class="w-full max-w-4xl mx-auto hidden">
+                    <header class="mb-8 text-center">
+                        <h2 class="text-3xl sm:text-4xl font-bold">Frequently Asked Questions</h2>
+                         <p class="mt-2 text-md" style="color: var(--c-text-secondary);">Answers to common questions about Inspiradi.</p>
+                    </header>
+                    <div class="space-y-4 text-left faq-content">
+                        <details class="faq-item p-4 rounded-lg">
+                            <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
+                                What is Inspiradi?
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <p class="mt-2" style="color: var(--c-text-secondary);">Inspiradi is a creative tool designed to help artists, writers, and creators of all kinds overcome creative blocks. It uses a combination of curated lists and generative AI to provide unique and engaging sparks of inspiration.</p>
+                        </details>
+                        <details class="faq-item p-4 rounded-lg">
+                            <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
+                                Is this app free to use? Are there any limits?
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <p class="mt-2" style="color: var(--c-text-secondary);">Yes, Inspiradi is free to use! The AI-powered features in The Spark Forge ("Elaborate" and "Get Brief") are unlimited. To ensure the service remains available for everyone, the "Generate Random Brief" feature has a limit of 10 uses per day. This count resets every day.</p>
+                        </details>
+                        <details class="faq-item p-4 rounded-lg">
+                            <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
+                                Do you claim any rights to the art I create?
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <p class="mt-2" style="color: var(--c-text-secondary);"><strong>Absolutely not.</strong> You, the artist, retain 100% ownership and all rights to your original artwork. Inspiradi is simply a tool to provide a starting idea. The unique creative expression is entirely yours, and we claim no ownership over it. For more details, please see our Terms of Service.</p>
+                        </details>
+                        <details class="faq-item p-4 rounded-lg">
+                            <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
+                                How is my data handled? What do you save?
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <p class="mt-2" style="color: var(--c-text-secondary);">Inspiradi is designed with privacy in mind. All your "Saved Sparks" and folder information are stored directly in your own web browser's `localStorage`. This data is <strong>not</strong> sent to our servers, and we cannot see or access your saved ideas. If you clear your browser data, your saved sparks will be deleted.</p>
+                        </details>
+                         <details class="faq-item p-4 rounded-lg">
+                            <summary class="font-bold text-lg cursor-pointer flex justify-between items-center">
+                                Are my prompts used to train the AI?
+                                <svg class="w-5 h-5 details-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><title>Expand/Collapse Arrow</title><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                            </summary>
+                            <p class="mt-2" style="color: var(--c-text-secondary);"><strong>No.</strong> According to Google's API policies, data sent to the Gemini API is not used for training their models. The prompts you send for elaboration or brief generation are processed for the one-time response and are not stored or used for any other purpose.</p>
+                        </details>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden"></div>
+    <div id="sub-category-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+    <div id="save-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+    <div id="move-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+    <div id="confirm-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+    <div id="info-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+    <div id="edit-spark-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+    <div id="welcome-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50"></div>
+
+    
+    <div id="tos-modal" class="modal-overlay fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content-wrapper">
+            <div class="modal-content rounded-2xl p-6 w-full max-w-2xl shadow-2xl flex flex-col">
+                <h2 class="text-2xl font-bold font-brand mb-4">Terms of Service</h2>
+                <div class="tos-content text-sm overflow-y-auto max-h-[60vh] pr-4" style="color: var(--c-text-secondary);">
+                    <p><strong>Last Updated: September 6, 2025</strong></p>
+                    <p>Welcome to Inspiradi! These Terms of Service ("Terms") govern your use of the Inspiradi web application (the "Service"). Please read these Terms carefully before using the Service.</p>
+                    
+                    <h2>1. Acceptance of Terms</h2>
+                    <p>By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.</p>
+
+                    <h2>2. Description of Service</h2>
+                    <p>Inspiradi is a web-based application designed to help users overcome creative blocks by providing randomly generated art prompts and ideas ("Prompts"). The Service utilizes both pre-defined lists and generative Artificial Intelligence (AI) models, including Google's Gemini API, to create these Prompts.</p>
+
+                    <h2>3. User Conduct</h2>
+                    <p>You agree to use the Service only for lawful purposes. You are prohibited from using the Service to generate, transmit, or store any content that is unlawful, harmful, defamatory, obscene, or otherwise objectionable.</p>
+                    
+                    <h2>4. Intellectual Property</h2>
+                    <h3>The Service:</h3>
+                    <p>All rights, title, and interest in and to the Service itself, including its source code, design, logos, and the "Inspiradi" name, are and will remain the exclusive property of the Service owner.</p>
+                    <h3>Your Artwork:</h3>
+                    <p>You, the user, retain full ownership and all intellectual property rights to the original artwork you create based on the Prompts generated by the Service. Inspiradi claims no ownership over your creative work.</p>
+
+                    <h2>5. Use of Third-Party Services (Google Gemini API)</h2>
+                    <p>The "Elaborate" and "Generative Brief" features of the Service are powered by the Google Gemini API. Your use of these features is also subject to Google's own terms of service and policies. While we strive to ensure the quality of AI-generated content, we are not responsible for its accuracy, appropriateness, or any potential biases.</p>
+
+                    <h2>6. Disclaimer of Warranties</h2>
+                    <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis. We provide no warranty that the service will be uninterrupted, error-free, or completely secure.</p>
+
+                    <h2>7. Limitation of Liability</h2>
+                    <p>In no event shall Inspiradi, nor its owner, be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your access to or use of the Service.</p>
+
+                    <h2>8. Termination</h2>
+                    <p>We may terminate or suspend your access to the Service immediately, without prior notice, if you breach these Terms.</p>
+
+                    <h2>9. Governing Law</h2>
+                    <p>These Terms shall be governed in accordance with the laws of India, with specific jurisdiction in the state of Andhra Pradesh.</p>
+
+                    <h2>10. Changes to Terms</h2>
+                    <p>We reserve the right to modify or replace these Terms at any time.</p>
+                    
+                    <h2>11. Contact Us</h2>
+                    <p>If you have any questions, please contact us at: <a href="mailto:contact.inspiradi@gmail.com" class="text-link hover:underline"><strong>contact.inspiradi@gmail.com</strong></a></p>
+                </div>
+                <div class="mt-6 pt-4 border-t" style="border-color: var(--c-border);">
+                    <div class="flex items-center mb-4">
+                        <input id="tos-checkbox" type="checkbox" class="h-4 w-4 rounded" style="background-color: var(--c-bg-tertiary); border-color: var(--c-border);">
+                        <label for="tos-checkbox" class="ml-2 block text-sm">I have read and agree to the Terms of Service.</label>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <button id="tos-decline-btn" class="btn-secondary font-bold py-2 px-6 rounded-lg">Decline</button>
+                        <button id="tos-agree-btn" class="btn-primary font-bold py-2 px-6 rounded-lg" disabled>Agree & Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js" defer></script>
+</body>
+</html>
