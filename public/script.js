@@ -328,7 +328,16 @@ function renderSimplePrompt(text, isEditing = false) {
     if(isEditing) {
         promptDisplay.innerHTML = `<textarea id="prompt-textarea" class="edit-textarea w-full h-28 p-2 rounded-lg">${text}</textarea>`;
     } else {
-         promptDisplay.innerHTML = `<p class="text-lg sm:text-xl text-center font-medium break-words">${text}</p>`;
+         // Format text: split into paragraphs
+        const paragraphs = text
+            .split(/\n+/) // split on blank lines/newlines
+            .map(p => `<p class="mb-4 leading-relaxed">${p.trim()}</p>`)
+            .join('');
+
+        promptDisplay.innerHTML = `
+            <div class="text-lg sm:text-xl text-left font-medium break-words max-w-3xl mx-auto">
+                ${paragraphs}
+            </div>`;
     }
 }
 function renderCreativeBrief(brief, targetElement) {
@@ -716,9 +725,9 @@ generationButtons.addEventListener('click', (e) => {
     if (target.id === 'spark-btn') {
         displayNewPrompt({ text: generateRandomPrompt(currentCategory, currentSubCategory) });
     } else if (target.id === 'elaborate-btn') {
-        if (currentPrompt && !currentBriefObject) callGeminiAPI(currentPrompt, 'elaborate', 'prompt');
+        if (currentPrompt) callGeminiAPI(currentPrompt, 'elaborate', 'prompt');
     } else if (target.id === 'generate-brief-btn') {
-        if (currentPrompt && !currentBriefObject) callGeminiAPI(currentPrompt, 'brief', 'prompt');
+        if (currentPrompt) callGeminiAPI(currentPrompt, 'brief', 'prompt');
     } else if (target.id === 'save-btn') {
         openSaveModal();
     }
