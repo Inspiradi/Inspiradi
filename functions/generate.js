@@ -17,7 +17,10 @@ exports.handler = async function (event) {
   // Adjust the prompt
   let finalPrompt = prompt;
   if (mode === "elaborate") {
-    finalPrompt = `Elaborate on this creative idea:\n\n${prompt}`;
+    finalPrompt = `Elaborate creatively on this idea for an artist. 
+Expand it into 2 short, inspiring paragraphs that feel poetic and visual, 
+not like a research paper or structured brief. 
+Keep it concise and aesthetically pleasing. Idea:\n\n${prompt}`;
   } else if (mode === "brief") {
     finalPrompt = `Turn this idea into a structured creative brief.
 Respond ONLY in JSON with fields: title, subject, setting, mood, artStyle, colorPalette (array), keyElements (array).
