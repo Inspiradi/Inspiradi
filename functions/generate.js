@@ -4,18 +4,23 @@
 exports.handler = async function (event) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
+    console.error("GEMINI_API_KEY is missing!");
     return { statusCode: 500, body: JSON.stringify({ error: "Missing API key" }) };
   }
 
-  const { prompt, mode } = JSON.parse(event.body);
+  const { prompt, mode } = JSON.parse(event.body || "{}");
+  if (!prompt) {
+    console.error("No prompt provided!");
+    return { statusCode: 400, body: JSON.stringify({ error: "No prompt provided" }) };
+  }
 
-  // Adjust the prompt based on mode
+  // Adjust the prompt
   let finalPrompt = prompt;
   if (mode === "elaborate") {
-    finalPrompt = `Elaborate on this creative idea with more detail and depth:\n\n${prompt}`;
+    finalPrompt = `Elaborate on this creative idea:\n\n${prompt}`;
   } else if (mode === "brief") {
     finalPrompt = `Turn this idea into a structured creative brief.
-Respond in JSON with fields: title, subject, setting, mood, artStyle, colorPalette (array), keyElements (array).
+Respond ONLY in JSON with fields: title, subject, setting, mood, artStyle, colorPalette (array), keyElements (array).
 Idea:\n\n${prompt}`;
   }
 
@@ -32,14 +37,20 @@ Idea:\n\n${prompt}`;
       body: JSON.stringify(payload),
     });
 
-    if (!response.ok) throw new Error(`Google API responded with status: ${response.status}`);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Google API error:", response.status, errorText);
+      throw new Error(`Google API responded with status ${response.status}: ${errorText}`);
+    }
 
     const data = await response.json();
+    console.log("Google API success:", JSON.stringify(data, null, 2));
+
     return { statusCode: 200, body: JSON.stringify(data) };
+
   } catch (error) {
     console.error("Function Error:", error);
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
 };
 
-};
