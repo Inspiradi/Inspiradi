@@ -60,6 +60,9 @@ const sparkOfTheDayContainer = document.getElementById('spark-of-the-day-contain
 const foldersListContainer = document.getElementById('folders-list-container');
 const randomCategoryBtn = document.getElementById('random-category-btn');
 const briefLimitCounter = document.getElementById('brief-limit-counter');
+const loadingSpinner = document.getElementById("loading-spinner");
+const briefLoadingSpinner = document.getElementById("brief-loading-spinner");
+
 
 // --- GEMINI API CALL (NEW VERSION) ---
 const callGeminiAPI = async (prompt, targetDisplay) => {
