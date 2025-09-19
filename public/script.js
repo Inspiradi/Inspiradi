@@ -90,8 +90,24 @@ const callGeminiAPI = async (prompt, mode = 'elaborate', targetDisplay = 'prompt
 
         const candidate = result.candidates?.[0];
         if (candidate && candidate.content?.parts?.[0]?.text) {
-            // decide how to render based on 'mode' if needed
-            return candidate.content.parts[0].text;
+        const text = candidate.content.parts[0].text;
+
+        if (mode === "brief") {
+        try {
+            const brief = JSON.parse(text); // convert JSON string → object
+            displayNewBrief(brief);         // render it nicely
+            recentBriefsHistory.unshift(brief);
+            if (recentBriefsHistory.length > 10) recentBriefsHistory.length = 10;
+            return brief;
+        } catch (err) {
+            console.error("Failed to parse brief JSON:", err, text);
+            throw new Error("AI response was not valid JSON for brief mode.");
+        }
+        } else {
+            // elaborate/text mode
+            displayNewPrompt({ text });
+            return text;
+        }
         } else {
             if (result.error) {
                 console.error("API Error from function:", result.error);
