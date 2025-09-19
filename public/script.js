@@ -65,58 +65,51 @@ const briefLoadingSpinner = document.getElementById("brief-loading-spinner");
 
 
 // --- GEMINI API CALL (NEW VERSION) ---
-const callGeminiAPI = async (prompt, targetDisplay) => {
-// This is the special address for our new "middleman" function on Netlify.
-const functionUrl = '/.netlify/functions/generate';
+// new signature: prompt, mode (e.g. 'elaborate'|'brief'), targetDisplay ('prompt'|'brief')
+const callGeminiAPI = async (prompt, mode = 'elaborate', targetDisplay = 'prompt') => {
+    const functionUrl = '/.netlify/functions/generate';
+    const displayEl = targetDisplay === 'prompt' ? promptDisplay : briefDisplay;
+    const spinner = targetDisplay === 'prompt' ? loadingSpinner : briefLoadingSpinner;
+    spinner.classList.remove('hidden');
 
-const displayEl = targetDisplay === 'prompt' ? promptDisplay : briefDisplay;
-const spinner = targetDisplay === 'prompt' ? loadingSpinner : briefLoadingSpinner;
-spinner.classList.remove('hidden');
+    try {
+        // include mode in body so server function can vary behavior if needed
+        const response = await fetch(functionUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: prompt, mode: mode })
+        });
 
-try {
-// We now call OUR function, not Google's.
-const response = await fetch(functionUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    // We send the prompt to our function.
-    body: JSON.stringify({ prompt: prompt })
-});
+        if (!response.ok) {
+            throw new Error(`API function failed with status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result.error) {
+            throw new Error(typeof result.error === 'string' ? result.error : JSON.stringify(result.error));
+        }
 
-if (!response.ok) {
-    throw new Error(`API function failed with status: ${response.status}`);
-}
-
-// Our function sends back the data from Google.
-const result = await response.json();
-
-if (result.error) {
-  throw new Error(typeof result.error === "string" ? result.error : JSON.stringify(result.error));
-}
-    
-const candidate = result.candidates?.[0];
-
-if (candidate && candidate.content?.parts?.[0]?.text) {
-    return candidate.content.parts[0].text;
-} else {
-    // This checks for errors returned from Google's API via our function
-    if (result.error) {
-        console.error("API Error from function:", result.error);
-        throw new Error(result.error.message || "Invalid response structure from API");
+        const candidate = result.candidates?.[0];
+        if (candidate && candidate.content?.parts?.[0]?.text) {
+            // decide how to render based on 'mode' if needed
+            return candidate.content.parts[0].text;
+        } else {
+            if (result.error) {
+                console.error("API Error from function:", result.error);
+                throw new Error(result.error.message || "Invalid response structure from API");
+            }
+            throw new Error("Invalid response structure from API");
+        }
+    } catch (error) {
+        console.error("Error calling the serverless function:", error);
+        const errorTarget = targetDisplay === 'prompt' ? promptDisplay : briefDisplay;
+        errorTarget.innerHTML = `<p class="text-center" style="color: var(--c-danger);">The AI seems to be busy. Please try again in a moment.</p>`;
+        if (targetDisplay === 'brief') currentBriefObject = null;
+        return null;
+    } finally {
+        spinner.classList.add('hidden');
     }
-    throw new Error("Invalid response structure from API");
-}
-} catch (error) {
-console.error("Error calling the serverless function:", error);
-const errorTarget = targetDisplay === 'prompt' ? promptDisplay : briefDisplay;
-errorTarget.innerHTML = `<p class="text-center" style="color: var(--c-danger);">The AI seems to be busy. Please try again in a moment.</p>`;
-if (targetDisplay === 'brief') {
-    currentBriefObject = null;
-}
-return null;
-} finally {
-spinner.classList.add('hidden');
-}
 };
+
 
 // --- DATA LOGIC ---
 function copyToClipboard(text, element) {
