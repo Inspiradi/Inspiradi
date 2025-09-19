@@ -94,7 +94,15 @@ const callGeminiAPI = async (prompt, mode = 'elaborate', targetDisplay = 'prompt
 
         if (mode === "brief") {
         try {
-            const brief = JSON.parse(text); // convert JSON string → object
+            let cleanedText = text.trim();
+
+            // remove ```json ... ``` wrappers if they exist
+            if (cleanedText.startsWith("```")) {
+                cleanedText = cleanedText.replace(/^```json/, "").replace(/^```/, "").replace(/```$/, "");
+            }
+
+            const brief = JSON.parse(cleanedText); // convert JSON string → object
+
             displayNewBrief(brief);         // render it nicely
             recentBriefsHistory.unshift(brief);
             if (recentBriefsHistory.length > 10) recentBriefsHistory.length = 10;
