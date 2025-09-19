@@ -727,7 +727,7 @@ generationButtons.addEventListener('click', (e) => {
     } else if (target.id === 'elaborate-btn') {
         if (currentPrompt) callGeminiAPI(currentPrompt, 'elaborate', 'prompt');
     } else if (target.id === 'generate-brief-btn') {
-        if (currentPrompt) callGeminiAPI(currentPrompt, 'brief', 'prompt');
+        if (currentPrompt) callGeminiAPI(currentPrompt, 'brief', 'brief');
     } else if (target.id === 'save-btn') {
         openSaveModal();
     }
