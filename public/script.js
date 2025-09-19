@@ -94,16 +94,20 @@ const callGeminiAPI = async (prompt, mode = 'elaborate', targetDisplay = 'prompt
 
         if (mode === "brief") {
         try {
-            let cleanedText = text.trim();
+        let cleanedText = text.trim();
+        if (cleanedText.startsWith("```")) {
+            cleanedText = cleanedText.replace(/^```json/, "").replace(/^```/, "").replace(/```$/, "");
+        }
+        const brief = JSON.parse(cleanedText);
 
-            // remove ```json ... ``` wrappers if they exist
-            if (cleanedText.startsWith("```")) {
-                cleanedText = cleanedText.replace(/^```json/, "").replace(/^```/, "").replace(/```$/, "");
-            }
-
-            const brief = JSON.parse(cleanedText); // convert JSON string → object
-
-            displayNewBrief(brief);         // render it nicely
+        if (targetDisplay === "prompt") {
+            // Render brief INSIDE Spark Forge prompt area
+            currentBriefObject = brief;
+            renderCreativeBrief(brief, promptDisplay);
+        } else {
+            // Default: Generative Brief section
+            displayNewBrief(brief);
+        }        // render it nicely
             recentBriefsHistory.unshift(brief);
             if (recentBriefsHistory.length > 10) recentBriefsHistory.length = 10;
             return brief;
@@ -325,18 +329,26 @@ function renderCategories() {
 }
 
 function renderSimplePrompt(text, isEditing = false) {
-    if(isEditing) {
-        promptDisplay.innerHTML = `<textarea id="prompt-textarea" class="edit-textarea w-full h-28 p-2 rounded-lg">${text}</textarea>`;
+    if (isEditing) {
+        promptDisplay.innerHTML = `
+            <textarea id="prompt-textarea" class="edit-textarea w-full h-28 p-2 rounded-lg">${text}</textarea>`;
     } else {
-         // Format text: split into paragraphs
-        const paragraphs = text
-            .split(/\n+/) // split on blank lines/newlines
-            .map(p => `<p class="mb-4 leading-relaxed">${p.trim()}</p>`)
-            .join('');
+        // Split into lines
+        const lines = text.split(/\n+/).map(line => {
+            let formattedLine = line.trim();
+
+            // Bold headings like **Heading:**
+            formattedLine = formattedLine.replace(
+                /\*\*(.+?)\*\*:?/g,
+                '<span class="font-bold text-indigo-400">$1:</span>'
+            );
+
+            return `<p class="mb-3 leading-relaxed">${formattedLine}</p>`;
+        });
 
         promptDisplay.innerHTML = `
-            <div class="text-lg sm:text-xl text-left font-medium break-words max-w-3xl mx-auto">
-                ${paragraphs}
+            <div class="text-base sm:text-lg text-left font-medium break-words max-w-3xl mx-auto space-y-2">
+                ${lines.join('')}
             </div>`;
     }
 }
@@ -727,7 +739,7 @@ generationButtons.addEventListener('click', (e) => {
     } else if (target.id === 'elaborate-btn') {
         if (currentPrompt) callGeminiAPI(currentPrompt, 'elaborate', 'prompt');
     } else if (target.id === 'generate-brief-btn') {
-        if (currentPrompt) callGeminiAPI(currentPrompt, 'brief', 'brief');
+        if (currentPrompt) callGeminiAPI(currentPrompt, 'brief', 'prompt');
     } else if (target.id === 'save-btn') {
         openSaveModal();
     }
